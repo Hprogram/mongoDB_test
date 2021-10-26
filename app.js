@@ -3,11 +3,13 @@ const express = require("express");
 // const mongodb = require("mongodb"); // 몽고 디비
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const cors = require("cors");
 
 const app = express();
 
 require("dotenv/config");
 
+app.use(cors());
 app.use(bodyParser.json());
 
 //DataBase
