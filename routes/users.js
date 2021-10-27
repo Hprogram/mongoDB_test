@@ -80,14 +80,28 @@ router.post("/", async (req, res) => {
       password: req.body.password,
       birth: req.body.birth,
       phoneNumber: req.body.phoneNumber,
+      state: req.body.state,
     });
     try {
       const savedUser = await user.save();
-
       res.send(savedUser);
     } catch (err) {
       res.send({ messeage: "올바르지 않은 입력입니다." });
     }
+  }
+});
+
+// 특정 상태를 가지고 있는 유저 찾기
+
+router.get("/state/:state", async (req, res) => {
+  // console.log(req.params.userId);
+  try {
+    // const user = await User.findById(req.params.userId); // 고유 아이디를 검색할 경우
+    const user = await User.find({ state: req.params.state }); // email 등 여러 조건으로 검색할 경우
+    console.log(user);
+    res.send(user);
+  } catch (err) {
+    res.status(401).send({ message: err });
   }
 });
 
