@@ -21,11 +21,13 @@ const url = `mongodb+srv://${username}:${password}@mulief.nlp2o.mongodb.net/${db
 //Import Routes
 const postsRoute = require("./routes/posts");
 const usersRoute = require("./routes/users");
+const uploadsRoute = require("./routes/upload");
 //Middlewares
 // auth 인증 등 해당 요청이 올 때 마다 사용자 인증 등 미들웨어를 사용하면 매우 유용
 // 라우팅 할 때도 사용
 app.use("/posts", postsRoute);
 app.use("/users", usersRoute);
+app.use("/uploads", uploadsRoute);
 
 // app.use("/posts", (req, res) => {
 //   res.send("we are on posts!");
