@@ -4,11 +4,15 @@ const multer = require("multer");
 
 const Song = require("../models/Song");
 
+router.get("/", (req, res) => {
+  res.send("We are on upload!");
+});
+
 // 음원 업로드 post (음원 한개 등록)
 router.post("/", async (req, res) => {
   // console.log(req.body);
-  const findSong = await User.findOne({ title: req.body.title });
-  console.log(findSong);
+  const findSong = await Song.findOne({ title: req.body.title });
+  // console.log(findSong);
   if (findSong !== null) {
     res.status(401).send("이미 등록된 음원 입니다.");
   } else {

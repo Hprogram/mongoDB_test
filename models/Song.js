@@ -81,4 +81,4 @@ const SongSchema = mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("Songs", UserSchema);
+module.exports = mongoose.model("Songs", SongSchema);
