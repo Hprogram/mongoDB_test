@@ -1,16 +1,6 @@
 const mongoose = require("mongoose");
 
 const SongSchema = mongoose.Schema({
-  //   email: {
-  //     type: String,
-  //     required: true,
-  //     default: undefined,
-  //   },
-  //   password: {
-  //     type: String,
-  //     required: true,
-  //     default: undefined,
-  //   },
   // 곡 이름
   title: {
     type: String,
