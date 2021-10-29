@@ -19,7 +19,6 @@ router.get("/:title", async (req, res) => {
   try {
     const songs = await Song.findOne({
       title: req.params.title,
-      biling: true,
     }); // limit는 원하는 만큼만 보내줄 수 있음.
     if (songs === null) {
       res.status(401).send({ message: "해당 음원이 없습니다." });

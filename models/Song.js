@@ -11,13 +11,13 @@ const SongSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  // 곡설명
-  description: {
+  // 아티스트 소개
+  introArtist: {
     type: String,
     required: true,
   },
-  // 아티스트 소개
-  introArtist: {
+  // 곡설명
+  description: {
     type: String,
     required: true,
   },
@@ -26,6 +26,14 @@ const SongSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+
+  // 카테고리
+  category: {
+    type: Object,
+    required: true,
+  },
+  /*--------------------//
+  // 3가지를 카테고리로 통합
   // 장르
   genre: {
     type: [String],
@@ -41,6 +49,9 @@ const SongSchema = mongoose.Schema({
     type: [String],
     required: true,
   },
+
+   //--------------------*/
+
   // 입체음향 (돌비) 경로
   atmos: {
     type: String,
