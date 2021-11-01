@@ -6,3 +6,6 @@ express, mongodb 사용
 
 스키마 구조 다시 설계해야 함. 
 카테고리에 맞추어 다시 설계 예정.
+
+streaming server와 API server 
+두개의 서버를 구현해야함.
