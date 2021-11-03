@@ -3,13 +3,14 @@ const router = express.Router();
 const multer = require("multer");
 
 const Song = require("../models/Song");
+const Category = require("../models/Category");
 
 router.get("/", (req, res) => {
   res.send("We are on upload!");
 });
 
 // 음원 업로드 post (음원 한개 등록)
-router.post("/", async (req, res) => {
+router.post("/song", async (req, res) => {
   // console.log(req.body);
   const findSong = await Song.findOne({ title: req.body.title });
   // console.log(findSong);
@@ -35,6 +36,28 @@ router.post("/", async (req, res) => {
     try {
       const savedSong = await song.save();
       res.send(savedSong);
+    } catch (err) {
+      res.send({ messeage: "올바르지 않은 입력입니다." });
+    }
+  }
+});
+
+router.post("/category", async (req, res) => {
+  // console.log("body: ", req.body);
+  const findCategory = await Category.findOne({ version: req.body.version });
+  console.log("category:", findCategory);
+  if (findCategory !== null) {
+    res.status(401).send("이미 등록된 버전입니다.");
+  } else {
+    const category = new Category({
+      version: req.body.version,
+      music: req.body.music,
+      therapy: req.body.therapy,
+    });
+    try {
+      const savedCategory = await category.save();
+      res.send(savedCategory);
+      console.log("정상적으로 등록되었습니다.");
     } catch (err) {
       res.send({ messeage: "올바르지 않은 입력입니다." });
     }

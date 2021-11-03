@@ -20,7 +20,7 @@ const url = `mongodb+srv://${username}:${password}@mulief.nlp2o.mongodb.net/${db
 
 //Import Routes
 const postsRoute = require("./routes/posts");
-const usersRoute = require("./routes/users");
+const usersRoute = require("./routes/user.route");
 const uploadsRoute = require("./routes/uploads");
 const searchRoute = require("./routes/search");
 //Middlewares
