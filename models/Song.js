@@ -21,17 +21,17 @@ const SongSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  // 앨범명
+  // 앨범명 (재생목록)
   albumName: {
     type: String,
     required: true,
   },
 
-  // 카테고리
-  category: {
-    type: Object,
-    required: true,
-  },
+  // 카테고리 테이블 따로 생성
+  // category: {
+  //   type: [Object],
+  //   required: true,
+  // },
   /*--------------------//
   // 3가지를 카테고리로 통합
   // 장르
@@ -56,6 +56,7 @@ const SongSchema = mongoose.Schema({
   atmos: {
     type: String,
     required: true,
+    default: null,
   },
   // 썸네일 이미지 경로
   thumbnail: {
@@ -80,7 +81,7 @@ const SongSchema = mongoose.Schema({
     required: true,
   },
 
-  // 파일 이미지 경로
+  // 파일 경로
   filepath: {
     type: String,
     required: true,
