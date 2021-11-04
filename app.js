@@ -23,6 +23,7 @@ const postsRoute = require("./routes/posts");
 const usersRoute = require("./routes/user.route");
 const uploadsRoute = require("./routes/uploads");
 const searchRoute = require("./routes/search");
+const downloadRoute = require("./routes/download");
 //Middlewares
 // auth 인증 등 해당 요청이 올 때 마다 사용자 인증 등 미들웨어를 사용하면 매우 유용
 // 라우팅 할 때도 사용
@@ -30,7 +31,7 @@ app.use("/posts", postsRoute);
 app.use("/users", usersRoute);
 app.use("/uploads", uploadsRoute);
 app.use("/search", searchRoute);
-
+app.use("/download", downloadRoute);
 // app.use("/posts", (req, res) => {
 //   res.send("we are on posts!");
 //   console.log("This is a middleware running");

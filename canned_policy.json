@@ -1,0 +1,8 @@
+{
+  "Statement": [
+    {
+      "Resource": "https://d2q4zq3nlazfnk.cloudfront.net/strawberrymoon.mp4",
+      "Condition": { "DateLessThan": { "AWS:EpochTime": 10000 } }
+    }
+  ]
+}
