@@ -3,14 +3,16 @@ const express = require("express");
 // const mongodb = require("mongodb"); // 몽고 디비
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 const cors = require("cors");
 
 const app = express();
 
 require("dotenv/config");
 
-app.use(cors());
+app.use(cors({ origin: "*", credentials: true }));
 app.use(bodyParser.json());
+app.use(cookieParser());
 
 //DataBase
 const username = process.env.USERNAME;
