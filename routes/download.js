@@ -11,9 +11,21 @@ const options = {
   expireTime: new Date().getTime() + 30000,
 };
 
-let privateKey = fs.readFileSync("./pk-APKAJAT5Z6UEHBXIEQTQ.pem", "utf-8");
-console.log(privateKey);
-let key = privateKey;
+let privateKey = fs.readFileSync("./pk-APKAJAT5Z6UEHBXIEQTQ.pem", "base64");
+let key = new Buffer(privateKey, "base64").toString("utf-8");
+
+const policy = JSON.stringify({
+  Statement: [
+    {
+      Resource: "https://d3g2qf02fqb0dq.cloudfront.net/*",
+      Condition: {
+        DateLessThan: {
+          "AWS:EpochTime": new Date().getTime() + 300000,
+        },
+      },
+    },
+  ],
+});
 
 // const ID = process.env.ACCESS_KEY_ID;
 // const SECRET = process.env.SECRET_KEY;
