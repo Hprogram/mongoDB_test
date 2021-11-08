@@ -12,12 +12,12 @@ const options = {
 };
 
 let privateKey = fs.readFileSync("./pk-APKAJAT5Z6UEHBXIEQTQ.pem", "base64");
-let key = new Buffer(privateKey, "base64").toString("utf-8");
+console.log(privateKey);
 
 const policy = JSON.stringify({
   Statement: [
     {
-      Resource: "https://d3g2qf02fqb0dq.cloudfront.net/*",
+      Resource: "https://api.mulief.com/*",
       Condition: {
         DateLessThan: {
           "AWS:EpochTime": new Date().getTime() + 300000,
@@ -41,17 +41,17 @@ const policy = JSON.stringify({
 //   return file;
 // };
 router.get("/", async (req, res) => {
-  const cf = new AWS.CloudFront.Signer("APKAJAT5Z6UEHBXIEQTQ", key);
+  const cf = new AWS.CloudFront.Signer("APKAJAT5Z6UEHBXIEQTQ", privateKey);
 
   //   const singedURL = cf.getSignedUrl(
   //     "https://d3g2qf02fqb0dq.cloudfront.net/strawberrymoon.mp4",
   //     options
   //   );
   //   res.send(singedURL);
-  const options = {
-    url: "https://d3g2qf02fqb0dq.cloudfront.net/*",
-    expires: Math.round(new Date().getTime() / 1000) + 3600,
-  };
+  //   const options = {
+  //     url: "https://d3g2qf02fqb0dq.cloudfront.net/*",
+  //     expires: Math.round(new Date().getTime() / 1000) + 3600,
+  //   };
 
   let signedURL = cf.getSignedUrl(options);
 
