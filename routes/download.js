@@ -12,7 +12,7 @@ const options = {
 };
 
 let privateKey = fs.readFileSync("./pk-APKAJAT5Z6UEHBXIEQTQ.pem", "base64");
-console.log(privateKey);
+// console.log(privateKey);
 
 const policy = JSON.stringify({
   Statement: [
