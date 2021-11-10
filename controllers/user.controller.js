@@ -3,6 +3,7 @@ const UserService = require("../services/user.service");
 const router = express.Router();
 const User = require("../models/User");
 
+// 다수의 유저 정보 get (limit로 10명 한정)
 exports.getUsers = async function (req, res, next) {
   // console.log(req.params);
   // console.log(req.query);
@@ -56,24 +57,24 @@ router.get("/mypage", async (req, res) => {
   res.send("We are on mypage");
 });
 
-// 한명의 유저 정보 delete (유저 ID or email로 삭제)
-router.delete("/:userId", async (req, res) => {
+// 한명의 유저 정보 delete (유저 ID or email로 삭제) /:userId ,/:email
+exports.deleteUser = async function (req, res, next) {
   try {
     // const user = await User.deleteOne({_id:req.params.userId}); // 고유 아이디를 검색할 경우
     const deleteUser = await User.deleteOne({ email: req.params.userId }); // email 등 여러 조건으로 검색할 경우, deleteOne은 한 개만 삭제
     res.send(deleteUser);
   } catch (err) {
-    res.status(401).send({ message: err });
+    res.status(400).send({ message: err });
   }
-});
+};
 
-// 한명의 유저 정보 update (유저 비밀번호 변경)
-router.patch("/:userId", async (req, res) => {
+// 한명의 유저 정보 update (유저 비밀번호 변경) /:userId
+exports.patchUser = async function (req, res, next) {
   const findUser = await User.findOne({ email: req.params.userId });
 
   // console.log(findUser);
   if (findUser === null) {
-    res.status(401).send("해당 사용자가 존재하지 않습니다.");
+    res.status(400).send("해당 사용자가 존재하지 않습니다.");
   } else {
     try {
       findUser.password = req.body.password;
@@ -89,22 +90,35 @@ router.patch("/:userId", async (req, res) => {
       // ); // email 등 여러 조건으로 검색할 경우
       res.send(findUser);
     } catch (err) {
-      res.status(401).send({ message: err });
+      res.status(400).send({ message: err });
     }
   }
-});
+};
 
-// 회원가입 (중복 알고리즘 삽입)
-router.post("/", async (req, res) => {
-  // console.log(req.body);
+// 특정 상태를 가지고 있는 유저 찾기 /state/:state
+exports.stateUser = async function (req, res, next) {
+  try {
+    // const user = await User.findById(req.params.userId); // 고유 아이디를 검색할 경우
+    const user = await User.find({ state: req.params.state }); // email 등 여러 조건으로 검색할 경우
+    console.log(user);
+    res.send(user);
+  } catch (err) {
+    res.status(400).send({ message: err });
+  }
+};
+
+// 회원가입 (중복 email 불가 알고리즘 삽입)
+exports.postSignup = async function (req, res, next) {
   const findUser = await User.findOne({ email: req.body.email });
   // console.log(findUser);
   if (findUser !== null) {
-    res.status(401).send("이미 가입된 이메일 입니다.");
+    res.status(400).send("이미 가입된 이메일 입니다.");
   } else {
+    const hashpassword = await UserService.hashPassword(req.body.password);
+
     const user = new User({
       email: req.body.email,
-      password: req.body.password,
+      password: hashpassword,
       birth: req.body.birth,
       phoneNumber: req.body.phoneNumber,
       state: req.body.state,
@@ -116,18 +130,23 @@ router.post("/", async (req, res) => {
       res.send({ messeage: "올바르지 않은 입력입니다." });
     }
   }
-});
+};
 
-// 특정 상태를 가지고 있는 유저 찾기
-
-router.get("/state/:state", async (req, res) => {
-  // console.log(req.params.userId);
-  try {
-    // const user = await User.findById(req.params.userId); // 고유 아이디를 검색할 경우
-    const user = await User.find({ state: req.params.state }); // email 등 여러 조건으로 검색할 경우
-    console.log(user);
-    res.send(user);
-  } catch (err) {
-    res.status(401).send({ message: err });
+// 로그인 (jwt 적용 X)
+exports.postSignin = async function (req, res, next) {
+  const findUser = await User.findOne({ email: req.body.email });
+  if (findUser === null) {
+    res.status(400).send({ message: "가입되지 않은 이메일입니다." });
+  } else {
+    const compare = await UserService.comparePassword(
+      req.body.password,
+      findUser.password
+    );
+    if (compare !== true) {
+      res.status(400).json({ message: "비밀번호가 일치하지 않습니다." });
+    } else {
+      // res.cookie() // jwt토큰으로 인증하기위해 넘겨줌.
+      res.status(200).json({ message: "로그인 성공!" });
+    }
   }
-});
+};

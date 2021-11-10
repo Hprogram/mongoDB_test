@@ -1,4 +1,6 @@
 const User = require("../models/User");
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
 
 exports.getUsers = async function (query, limit) {
   try {
@@ -16,4 +18,15 @@ exports.getUser = async function (query, limit) {
   } catch (err) {
     throw err;
   }
+};
+
+exports.hashPassword = async function (password) {
+  const salt = await bcrypt.genSalt(saltRounds);
+  const hashpassword = await bcrypt.hash(password, salt);
+  return hashpassword;
+};
+
+exports.comparePassword = async function (password, hashpassword) {
+  const compare = bcrypt.compareSync(password, hashpassword);
+  return compare;
 };
