@@ -23,7 +23,7 @@ const url = `mongodb+srv://${username}:${password}@mulief.nlp2o.mongodb.net/${db
 //Import Routes
 const postsRoute = require("./routes/posts");
 const usersRoute = require("./routes/user.route");
-const uploadsRoute = require("./routes/uploads");
+const uploadsRoute = require("./routes/upload");
 const searchRoute = require("./routes/search");
 const downloadRoute = require("./routes/download");
 //Middlewares
@@ -31,7 +31,7 @@ const downloadRoute = require("./routes/download");
 // 라우팅 할 때도 사용
 app.use("/posts", postsRoute);
 app.use("/users", usersRoute);
-app.use("/uploads", uploadsRoute);
+app.use("/upload", uploadsRoute);
 app.use("/search", searchRoute);
 app.use("/download", downloadRoute);
 // app.use("/posts", (req, res) => {
