@@ -9,3 +9,5 @@ express, mongodb 사용
 
 streaming server와 API server (한개로 통일)
 Cloudfront로 스트리밍 구현
+
+음원 업로드 관련 Lambda 러닝커브로 인해 잠시 중단.
