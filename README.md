@@ -10,4 +10,4 @@ express, mongodb 사용
 streaming server와 API server (분류해서 구현 완료)
 Cloudfront로 스트리밍 구현 (완료)
 
-음원 업로드 관련 Lambda 구현 예정.
+음원 업로드 관련 Lambda, mediaconvert로 자동화 예정
